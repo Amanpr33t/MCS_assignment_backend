@@ -4,7 +4,7 @@ app.use(express.static('./public'))
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 const connectDB= require('./db/connectDB')
-const port= 3002
+const port= 3003
 const mongoose= require('mongoose')
 mongoose.set('strictQuery', true)
 require('dotenv').config()
@@ -24,6 +24,7 @@ app.use((req,res,next)=>{
 app.use('/task',taskRouter)
 app.use(notFound)
 app.use(errorHandlerMiddleware)
+
 
 const start=async()=>{
     try{
