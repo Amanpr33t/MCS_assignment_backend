@@ -27,7 +27,7 @@ app.use(errorHandlerMiddleware)
 
 const start=async()=>{
     try{
-        await connectDB('mongodb+srv://amanpreet:AmVUCwaNzJa5LUfK@cluster0.jk1trot.mongodb.net/MCS_assignment?retryWrites=true&w=majority')
+        await connectDB(process.env.MONGO_URI)
         app.listen(port,console.log(`server running on port ${port}...`))
     }catch(error){
         console.log(error)
