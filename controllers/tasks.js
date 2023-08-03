@@ -4,11 +4,13 @@ const { StatusCodes } = require('http-status-codes')
 
 const addTask = async (req, res, next) => {
     try {
-        const { taskInfo, completionDate } = req.body
-        if (!completionDate || !taskInfo) {
+        const { taskInfo, completionDate, title } = req.body
+        if (!completionDate || !taskInfo || !title) {
             throw new CustomAPIError('Add taskInfo and completion date', 404)
         } else if (taskInfo && taskInfo.length > 160) {
             throw new CustomAPIError('Task content is too long', 400)
+        }else if (title && title.length > 50) {
+            throw new CustomAPIError('Title is too long', 400)
         } else {
             await Task.create({ ...req.body, completionDate: new Date(completionDate) })
             return res.status(StatusCodes.CREATED).json({ status: 'ok', msg: 'Task has been added successfully' })
@@ -39,7 +41,7 @@ const getAllTasks = async (req, res) => {
             }
         })
         let allTasks = await Task.find({}).sort({ "completionDate": 1 })
-        if(!allTasks){
+        if (!allTasks) {
             throw new CustomAPIError('Some error occured', 500)
         }
         return res.status(StatusCodes.OK).json({ status: 'ok', count: allTasks.length, allTasks })

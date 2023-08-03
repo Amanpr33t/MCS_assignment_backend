@@ -5,6 +5,11 @@ const TaskSchema = new mongoose.Schema({
         required: [true, 'please provide information about task'],
         trim: true
     },
+    title: {
+        type: String,
+        required: [true, 'please provide information about title'],
+        trim: true
+    },
     completionDate: {
         type: Date ,
         required:true
